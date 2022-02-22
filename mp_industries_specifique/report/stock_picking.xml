@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="stock_report_delivery_document_inherit_mp_industries" inherit_id="stock.report_delivery_document">
+
+        <xpath expr="/t/t/t/div/div[1]" position="before">
+            <div class="row" t-if="o.picking_type_id.code=='incoming'">
+                <div class="col-12 text-center">
+                    <h1>
+                        <span>Bon De Réception</span>
+                        <br/>
+                    </h1>
+                </div>
+
+            </div>
+        </xpath>
+
+        <xpath expr="/t/t/t/div/div[3]/div[1]/strong" position="replace">
+            <t t-if="o.picking_type_id.code=='incoming'">
+                <strong>Demande:</strong>
+            </t>
+            <t t-else="">
+                <strong>Order:</strong>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@name='div_sched_date']" position="replace">
+            <div t-if="o.state" class="col-auto" name="div_sched_date">
+                <t t-if="o.picking_type_id.code=='incoming'">
+                    <strong>Date Réception:</strong>
+                </t>
+                <t t-else="">
+                    <strong>Shipping Date:</strong>
+                </t>
+
+                <t t-if="o.state == 'done'">
+                    <p t-field="o.date_done" t-options='{"widget": "date"}'/>
+                </t>
+                <t t-if="o.state != 'done'">
+                    <p t-field="o.scheduled_date" t-options='{"widget": "date"}'/>
+                </t>
+            </div>
+        </xpath>
+
+    </template>
+
+
+</odoo>

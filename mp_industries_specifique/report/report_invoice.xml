@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_invoice_document_mp_industries" inherit_id="account.report_invoice_document">
+        <xpath expr="/t/t/div/div[1]/div[5]/strong" position="replace">
+            <t t-if="o.move_type == 'in_invoice'">
+                <strong>No Fact. Fourn.:</strong>
+            </t>
+            <t t-else="">
+                <strong>Reference:</strong>
+            </t>
+        </xpath>
+        <xpath expr="/t/t/div/div[1]/div[3]/strong" position="replace">
+            <t t-if="o.move_type == 'in_invoice'">
+                <strong>Commande MP:</strong>
+            </t>
+            <t t-else="">
+                <strong>Origine:</strong>
+            </t>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[3]/tr[1]/t[1]/td[2]/span[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t/t/div/table/tbody/t[3]/tr/t[1]/td[1]" position="replace">
+            <t t-if="line.product_id">
+                <td name="account_invoice_line_name"><span t-field="line.product_id.display_name" t-options="{'widget': 'text'}"/></td>
+            </t>
+            <t t-else="">
+                <td name="account_invoice_line_name"><span t-field="line.name" t-options="{'widget': 'text'}"/></td>
+            </t>
+            <attribute name="style" separator=";" add="margin-top:1px"/>
+        </xpath>
+    </template>
+</odoo>
