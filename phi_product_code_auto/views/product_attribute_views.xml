@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Product attribute -->
+
+    <record id="product_template_attribute_line_form_code_auto" model="ir.ui.view">
+        <field name="name">product.template.attribute.line.form.code_auto</field>
+        <field name="model">product.template.attribute.line</field>
+        <field name="inherit_id" ref="product.product_template_attribute_line_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value_ids']/tree/field[@name='name']" position="after">
+                <field name="code_short"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_attribute_view_form_code_auto" model="ir.ui.view">
+        <field name="name">product.attribute.form.code_auto</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value_ids']/tree/field[@name='name']" position="after">
+                <field name="code_short" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

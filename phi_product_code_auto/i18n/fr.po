@@ -1,0 +1,110 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* phi_product_code_auto
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-27 15:13+0000\n"
+"PO-Revision-Date: 2021-12-27 15:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: phi_product_code_auto
+#: model:ir.model,name:phi_product_code_auto.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Valeur de la caractéristique"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_attribute_value__code_short
+msgid "Code Court"
+msgstr ""
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__code_sequence
+msgid "Code Sequence"
+msgstr "Code Séquence pour le calcul du code article"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__code_variant_auto
+msgid "Code variant auto"
+msgstr "Code variante auto"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_product__is_default_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_template__is_default_code_auto
+msgid "Default Code Auto"
+msgstr "Code article auto"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_attribute_value__display_name
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__display_name
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_product__display_name
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_template__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_attribute_value__id
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__id
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_product__id
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_template__id
+msgid "ID"
+msgstr ""
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_attribute_value____last_update
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category____last_update
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_product____last_update
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_template____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__code_prefix
+msgid "Prefix for Product Internal Reference"
+msgstr "Préfixe des codes articles"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,help:phi_product_code_auto.field_product_category__code_prefix
+msgid ""
+"Prefix used to generate the internal reference for products created with "
+"this category. If blank the default sequence will be used."
+msgstr "Le préfixe est utilisé pour calculer le code article"
+
+#. module: phi_product_code_auto
+#: model:ir.model,name:phi_product_code_auto.model_product_product
+msgid "Product"
+msgstr "Article"
+
+#. module: phi_product_code_auto
+#: model:ir.model,name:phi_product_code_auto.model_product_category
+msgid "Product Category"
+msgstr "Catégorie d'article"
+
+#. module: phi_product_code_auto
+#: model:ir.model,name:phi_product_code_auto.model_product_template
+msgid "Product Template"
+msgstr "Modèle d'article"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,help:phi_product_code_auto.field_product_attribute_value__code_short
+msgid "Short Code for product SKU calculation"
+msgstr "Code court pour le calcul du code article"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,field_description:phi_product_code_auto.field_product_category__code_separator
+msgid "separator for Product Internal Reference"
+msgstr "Séparateur pour le calcul du code article"
+
+#. module: phi_product_code_auto
+#: model:ir.model.fields,help:phi_product_code_auto.field_product_category__code_separator
+msgid ""
+"separator used to generate the internal reference for products created with "
+"this category. If blank the separator is '-'."
+msgstr ""
