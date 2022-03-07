@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="paperformat_catalog_report" model="report.paperformat">
+        <field name="name">Legal Catalog Report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_catalog_report" model="ir.actions.report">
+        <field name="name">catalog_pricelist_report.catalog_report</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">catalog_pricelist_report.catalog_report</field>
+        <field name="report_file">catalog_pricelist_report.catalog_report</field>
+        <field name="paperformat_id" ref="catalog_pricelist_report.paperformat_catalog_report"/>
+    </record>
+
+<!--    <report-->
+<!--            id="action_catalog_report"-->
+<!--            name="catalog_pricelist_report.catalog_report"-->
+<!--            model="product.product"-->
+<!--            string="Product Catalog"-->
+<!--            menu="False"-->
+<!--            paperformat="catalog_pricelist_report.paperformat_catalog_report"/>-->
+</odoo>

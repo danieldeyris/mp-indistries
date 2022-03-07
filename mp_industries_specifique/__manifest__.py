@@ -13,7 +13,7 @@
     'author': "Phidias",
     'website': "http://www.phidias.fr",
     'category': 'Uncategorized',
-    'version': '15.0.0.3',
+    'version': '15.0.0.4',
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
@@ -33,6 +33,7 @@
         'phi_order_mail_with_product_attachments',
         'phi_replenishment_vendor_default',
         'phi_product_code_auto',
+        'catalog_pricelist_report',
     ],
     "data": [
         'security/ir.model.access.csv',

@@ -1,0 +1,72 @@
+<odoo>
+    <record id="catalog_pricelist_wizard_form_view" model="ir.ui.view">
+        <field name="name">catalog.pricelist.wizard.form.view</field>
+        <field name="model">catalog.pricelist.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <notebook>
+                    <page string="Pricelist">
+                        <group col="2">
+                            <field name="pricelist_id"/>
+                            <field name="language_id"/>
+                            <field name="custom_title"/>
+                            <field name="qty_1"/>
+                            <field name="qty_2"/>
+                            <field name="qty_3"/>
+                        </group>
+                    </page>
+                    <page string="Options">
+                        <group colspan="6">
+                            <field name="header"/>
+                            <field name="print_images"/>
+                            <field name="print_attributes"/>
+                        </group>
+                        <group>
+                            <field name="image" widget="image" attrs="{'invisible': [('print_images', '=', False)]}"
+                                   nolabel="1" img_width="150" img_height="200" width="150" height="300"/>
+                        </group>
+                    </page>
+                    <page string="Barcode">
+                        <group col="2">
+                            <field name="barcode_print"/>
+                            <field name="barcode_type" required="1"/>
+                            <field name="barcode_height" required="1"/>
+                            <field name="barcode_width" required="1"/>
+                        </group>
+                    </page>
+                    <page string="Stock">
+                        <group col="2">
+                            <field name="available_quantity"/>
+                            <field name="incoming_quantity"/>
+                        </group>
+                    </page>
+                </notebook>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="oe_highlight"/>
+                    <button string='Cancel' special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_catalog_pricelist_wizard" model="ir.actions.act_window">
+        <field name="name">Catalog Pricelist Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">catalog.pricelist.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="binding_model_id" ref="product.model_product_product"/>
+        <field name="binding_type">report</field>
+        <field name="target">new</field>
+    </record>
+
+    <!--    <act_window-->
+    <!--            id="action_catalog_pricelist_wizard"-->
+    <!--            name="Catalog Pricelist Report"-->
+    <!--            res_model="catalog.pricelist.report.wizard"-->
+    <!--            binding_model="product.product"-->
+    <!--            binding_views="list"-->
+    <!--            binding_type="report"-->
+    <!--            view_mode="form"-->
+    <!--            target="new"-->
+    <!--        />-->
+</odoo>
