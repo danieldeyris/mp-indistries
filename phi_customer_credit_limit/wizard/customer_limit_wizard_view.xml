@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+        <record id="view_customer_limit_wizard_form" model="ir.ui.view">
+            <field name="name">customer.limit.wizard.form</field>
+            <field name="model">customer.limit.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="Customer Credit Limit">
+                <span> Credit Limit Exceeded</span>
+                <group>
+                    <field name="credit_limit_force_reason"/>
+                </group>
+                <footer>
+		    	    <button string="Confirm" name="confirm_order" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_customer_limit_wizard" model="ir.actions.act_window">
+            <field name="name">Customer Credit Limit</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer.limit.wizard</field>
+            <field name="binding_view_types">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+</odoo>
