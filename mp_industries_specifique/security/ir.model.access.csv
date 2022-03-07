@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+mp_industries_specifique.access_mrp_bom_line_decoupe,access_mrp_bom_line_decoupe,mp_industries_specifique.model_mrp_bom_line_decoupe,base.group_user,1,1,1,1
+mp_industries_specifique.access_stock_move_decoupe,access_stock_move_decoupe,mp_industries_specifique.model_stock_move_decoupe,base.group_user,1,1,1,1

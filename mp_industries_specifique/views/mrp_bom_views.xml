@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_bom_form_view_mp_industrie" model="ir.ui.view">
+        <field name="name">mrp.bom.form.mp_industrie</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='components']/field[@name='bom_line_ids']/tree[1]"
+                   position="attributes">
+                <attribute name="editable"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='components']/field[@name='bom_line_ids']/tree[1]/field[@name='product_uom_id']"
+                   position="after">
+                <field name="decoupe_ids" optional="show"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='components']/field[@name='bom_line_ids']/tree[1]"
+                   position="after">
+                <form string="Bill of Material line" create="0" edit="0">
+                    <sheet name="studio_sheet_42942d">
+                        <group name="studio_group_aa73fd">
+                            <group string="Component" name="studio_group_76e44f">
+                                <field name="product_id"/>
+                                <field name="parent_product_tmpl_id" invisible="1"/>
+                                <label for="product_qty" string="Quantity"/>
+                                <div class="o_row" name="studio_div_4b185e">
+                                    <field name="product_qty"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="product_uom_id" options="{'no_open':True,'no_create':True}"
+                                           groups="uom.group_uom"/>
+                                </div>
+                                <field name="possible_bom_product_template_attribute_value_ids" invisible="1"/>
+                                <field name="bom_product_template_attribute_value_ids" widget="many2many_tags"
+                                       options="{'no_create': True}" groups="product.group_product_variant"/>
+                            </group>
+                            <group string="Operation" name="studio_group_46b90d">
+                                <field name="company_id" invisible="1"/>
+                                <field name="sequence" groups="base.group_no_one"/>
+                                <field name="allowed_operation_ids" invisible="1"/>
+                                <field name="operation_id" groups="mrp.group_mrp_routings"/>
+                            </group>
+                        </group>
+                        <notebook name="studio_notebook_cyAa6">
+                            <page string="Découpe" name="studio_page_cyAa6">
+                                <group name="studio_group_cyAa6">
+                                    <field name="decoupe_ids" nolabel="1">
+                                        <tree string="Découpe ligne nomenclature" editable="top"
+                                              default_order="name asc">
+                                            <field name="id" optional="show" attrs="{}" invisible="1"/>
+                                            <field name="name"/>
+                                            <field name="qty" optional="show"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mrp_production_form_inherit_view_mp_industries">
+        <field name="name">mrp.production.form.mp_industrie</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='components']/field[@name='move_raw_ids']/tree[1]/field[@name='group_id']"
+                   position="after">
+                <button name="action_show_decoupe" type="object" class="oe_stat_button" icon="fa-pencil"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_operations_decoupe" model="ir.ui.view">
+        <field name="name">stock.move.operations.form.decoupe</field>
+        <field name="model">stock.move</field>
+        <field name="priority">1001</field>
+        <field name="arch" type="xml">
+            <form string="Découpes">
+                <field name="sequence" invisible="1"/>
+                <field name="company_id" invisible="1"/>
+                <field name="state" invisible="1"/>
+                <field name="location_id" invisible="1"/>
+                <field name="location_dest_id" invisible="1"/>
+                <field name="picking_id" invisible="1"/>
+                <field name="picking_type_id" invisible="1"/>
+                <field name="is_locked" invisible="1"/>
+                <field name="picking_type_entire_packs" invisible="1"/>
+                <field name="display_assign_serial" invisible="1"/>
+                <field name="from_immediate_transfer" invisible="1"/>
+                <field name="product_uom_category_id" invisible="1"/>
+                <group>
+                    <group>
+                        <field name="product_id" readonly="1"/>
+                        <label for="product_uom_qty" attrs="{'invisible': [('from_immediate_transfer', '=', True)]}"/>
+                        <div class="o_row" attrs="{'invisible': [('from_immediate_transfer', '=', True)]}">
+                            <span>
+                                <field name="product_uom_qty" readonly="1" nolabel="1"/>
+                            </span>
+                            <span>
+                                <field name="product_uom" readonly="1" nolabel="1"/>
+                            </span>
+                        </div>
+                    </group>
+                </group>
+                <field name="decoupe_ids" nolabel="1" readonly="1">
+                    <tree string="Découpe ligne nomenclature"
+                          default_order="name asc">
+                        <field name="id" optional="show" attrs="{}" invisible="1"/>
+                        <field name="name"/>
+                        <field name="qty" optional="show"/>
+                    </tree>
+                </field>
+                <footer class="oe_edit_only">
+                    <button string="Close" special="cancel" data-hotkey="z" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

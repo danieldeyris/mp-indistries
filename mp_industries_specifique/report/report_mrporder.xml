@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_mrporder_mp_industries" inherit_id="mrp.report_mrporder">
+        <xpath expr="/t/t/t/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col-7">
+                    <h1>
+                        <span class="text-right">Ordre de Fabrication</span>
+                    </h1>
+                </div>
+                <div class="col-5">
+                    <span class="text-right">
+                        <strong>Date :</strong>
+                    </span>
+                    <span class="text-right" t-field="o.date_planned_start"/>
+                </div>
+            </div>
+            <br/>
+        </xpath>
+
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[3]/div[2]/span[1]" position="replace"/>
+
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[4]" position="replace"/>
+
+        <xpath expr="/t/t/t/t/div/div[4]/div[1]/strong" position="replace">
+            <strong>Produit:</strong>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[4]/div[3]/strong" position="replace">
+            <strong>Quantité:</strong>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[5]/table/tr[1]/th[3]/strong" position="replace">
+            <strong>Temps Min.</strong>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[5]/table/tr[1]/th[3]" position="after">
+            <th>
+                <strong>Temps Heures</strong>
+            </th>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[5]/table/tr[2]/td[3]" position="after">
+            <td>
+                <span t-field="line2.duration_hours"/>
+            </td>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[4]" position="after">
+            <t t-if="o.product_text">
+                <br/>
+                <div class="row">
+                    <div class="col">
+                        <span t-field="o.product_text"/>
+                    </div>
+                </div>
+                <br/>
+            </t>
+        </xpath>
+
+        <xpath expr="/t/t/t/t/div/div[4]/div[3]" position="after">
+            <div class="col-3" t-if="o.customer_id">
+                <strong>Client:</strong>
+                <br/>
+                <span t-field="o.customer_id"/>
+            </div>
+            <div class="col-3" t-if="o.origin">
+                <strong>N° Commande:</strong>
+                <br/>
+                <span t-field="o.origin"/>
+            </div>
+            <div class="col-3" t-if="o.commitment_date">
+                <strong>Date Livraison:</strong>
+                <br/>
+                <span t-field="o.commitment_date"/>
+            </div>
+        </xpath>
+
+        <xpath expr="//span[@t-field='raw_line.product_id']" position="after">
+            <t t-if="raw_line.decoupe_ids">
+                <table>
+                    <tr t-foreach="raw_line.decoupe_ids" t-as="decoupe">
+                        <td>
+                            <span t-field="decoupe.name"/>
+                        </td>
+                        <td>
+                            <span t-field="decoupe.qty"/>
+                        </td>
+                    </tr>
+                </table>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>
