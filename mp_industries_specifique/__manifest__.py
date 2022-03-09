@@ -13,7 +13,7 @@
     'author': "Phidias",
     'website': "http://www.phidias.fr",
     'category': 'Uncategorized',
-    'version': '15.0.0.7',
+    'version': '15.0.0.8',
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
@@ -36,6 +36,7 @@
         'catalog_pricelist_report',
         'phi_customer_credit_limit',
         'phi_order_comment',
+        'delivery',
     ],
     "data": [
         'security/ir.model.access.csv',
@@ -45,5 +46,6 @@
         'report/stock_picking.xml',
         'report/report_purchase_order.xml',
         'report/report_sale_order.xml',
+        'report/stock_report_deliveryslip.xml',
     ]
 }
