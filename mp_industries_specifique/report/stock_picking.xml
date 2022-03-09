@@ -7,7 +7,7 @@
             <div class="row" t-if="o.picking_type_id.code=='incoming'">
                 <div class="col-12 text-center">
                     <h1>
-                        <span>Bon De Réception</span>
+                        <span>Bon de Réception</span>
                         <br/>
                     </h1>
                 </div>
