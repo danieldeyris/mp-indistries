@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_saleorder_document_mp_industries" inherit_id="sale.report_saleorder_document">
+        <xpath expr="/t/t/div/h2/t[1]/span[2]" position="replace">
+            <span t-if="doc.state in ['draft','sent']">Devis N°</span>
+        </xpath>
+        <xpath expr="/t/t/div/div[1]" position="after">
+            <div class="row">
+                <div class="col">
+                    <span t-field="doc.partner_id.x_studio_identifiant_qudra"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t/t/div/div[2]" position="after">
+            <div class="row address">
+                <div class="col-5">
+                    <div t-field="doc.partner_invoice_id" t-options-widget="'contact'"/>
+                </div>
+                <div class="col-5 offset-2"/>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['name', 'address', 'phone', 'mobile']</attribute>
+        </xpath>
+        <xpath expr="/t/t/div/table/thead/tr/th[5]" position="after">
+            <th>
+                <span>Date prévue</span>
+            </th>
+        </xpath>
+        <xpath expr="/t/t/div/table/tbody/t[2]/tr/t[1]/td[5]" position="after">
+            <td>
+                <span t-field="line.scheduled_date"/>
+            </td>
+        </xpath>
+        <xpath expr="/t/t/div/table/tbody/t[2]/t[3]/tr/td" position="attributes">
+            <attribute name="colspan">100</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[4]/t[1]/strong[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[4]/t[1]/div[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[3]/div[1]" position="attributes">
+            <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email', 'vat']</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[2]/p[1]" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+        <xpath expr="/t/t/div/div[4]/div[6]/strong" position="replace">
+            <strong>Commercial :</strong>
+        </xpath>
+        <xpath expr="/t/t/div/table/thead/tr/th[3]" position="replace">
+            <th name="th_priceunit" class="text-right">Prix Net</th>
+        </xpath>
+        <xpath expr="/t/t/div/table/thead/tr/th[1]" position="before">
+            <th>
+                <span>Référence interne</span>
+            </th>
+        </xpath>
+        <xpath expr="/t/t/div/table/tbody/t[2]/tr/t[1]/td[1]" position="before">
+            <td>
+                <span t-field="line.product_id.default_code"/>
+            </td>
+        </xpath>
+        <xpath expr="/t/t/div/table/thead/tr/th[1]/span" position="replace">
+            <span>Référence</span>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[2]/span[1]" position="attributes">
+            <attribute name="t-field">line.product_id.name</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[6]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]/span[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[7]/span[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[7]/span[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[3]/span[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[7]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div t-if="doc.pricelist_id" class="col-3 bm-2">
+                <strong>Tarif :</strong>
+                <p t-field="doc.pricelist_id" class="m-0"/>
+            </div>
+        </xpath>
+
+        <xpath expr="/t/t/div/div[4]" position="after">
+            <div class="row" t-if="doc.order_comment">
+                <div class="col-2">
+                    <span>
+                        <strong>Commentaire :</strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="doc.order_comment"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <div class="row" t-if="doc.order_volume">
+                <div class="col-2">
+                    <span>
+                        <strong>Volume : </strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="doc.order_volume"/> m3
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
+            <div t-if="doc.state == 'draft'" class="mt32 ml64 mr4" name="accord">
+                <div class="offset-8">
+                    <strong>Bon pour accord</strong>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

@@ -13,7 +13,7 @@
     'author': "Phidias",
     'website': "http://www.phidias.fr",
     'category': 'Uncategorized',
-    'version': '15.0.0.6',
+    'version': '15.0.0.7',
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
@@ -44,5 +44,6 @@
         'report/report_invoice.xml',
         'report/stock_picking.xml',
         'report/report_purchase_order.xml',
+        'report/report_sale_order.xml',
     ]
 }
