@@ -8,21 +8,15 @@
                 </div>
             </div>
         </xpath>
-        <xpath expr="/t[1]/t[1]/t[1]/div[1]/div[3]/div[1]/div[2]/div[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/t[1]/div[1]/div[3]/div[1]/div[2]/span[1]/strong[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t/t/t/div/div[3]/div[2]/div[3]/span/strong" position="replace">
-            <strong>Adresse Livraison:</strong>
-        </xpath>
-        <xpath expr="/t/t/t/div/div[4]/div[1]/t[2]/strong" position="replace">
-            <strong>Commande:</strong>
-        </xpath>
-        <xpath expr="/t/t/t/div/div[4]/div[4]/strong" position="replace">
-            <strong>Poids Net:</strong>
-        </xpath>
+<!--        <xpath expr="/t/t/t/div/div[3]/div[2]/div[3]/span/strong" position="replace">-->
+<!--            <strong>Adresse Livraison:</strong>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/t/t/div/div[4]/div[1]/t[2]/strong" position="replace">-->
+<!--            <strong>Commande:</strong>-->
+<!--        </xpath>-->
+<!--        <xpath expr="/t/t/t/div/div[4]/div[4]/strong" position="replace">-->
+<!--            <strong>Poids Net:</strong>-->
+<!--        </xpath>-->
 
         <xpath expr="//div[@name='div_outgoing_address']" position="inside">
             <div class="row">

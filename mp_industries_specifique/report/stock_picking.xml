@@ -15,14 +15,14 @@
             </div>
         </xpath>
 
-        <xpath expr="/t/t/t/div/div[3]/div[1]/strong" position="replace">
-            <t t-if="o.picking_type_id.code=='incoming'">
-                <strong>Demande:</strong>
-            </t>
-            <t t-else="">
-                <strong>Order:</strong>
-            </t>
-        </xpath>
+<!--        <xpath expr="/t/t/t/div/div[3]/div[1]/strong" position="replace">-->
+<!--            <t t-if="o.picking_type_id.code=='incoming'">-->
+<!--                <strong>Demande:</strong>-->
+<!--            </t>-->
+<!--            <t t-else="">-->
+<!--                <strong>Order:</strong>-->
+<!--            </t>-->
+<!--        </xpath>-->
 
         <xpath expr="//div[@name='div_sched_date']" position="replace">
             <div t-if="o.state" class="col-auto" name="div_sched_date">
