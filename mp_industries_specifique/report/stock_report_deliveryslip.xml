@@ -25,15 +25,11 @@
         </xpath>
 
         <xpath expr="//div[@name='div_outgoing_address']" position="inside">
-             <div class="row" t-if="o.picking_comment">
-                <div>
-                    <span>
-                        <strong>Reference :</strong>
-                    </span>
-                </div>
-                <div>
-                    <span t-field="o.picking_comment"/>
-                </div>
+            <div class="row">
+            <div  class="col-auto" t-if="o.picking_comment">
+                <strong>Reference :</strong>
+                <p t-field="o.picking_comment"/>
+            </div>
             </div>
         </xpath>
 
