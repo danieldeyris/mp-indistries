@@ -29,5 +29,20 @@
             </t>
             <attribute name="style" separator=";" add="margin-top:1px"/>
         </xpath>
+
+        <xpath expr="//div[@id='informations']" position="before">
+            <div class="row" t-if="o.move_comment">
+                <div class="col-2">
+                    <span>
+                        <strong>Commentaire :</strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="o.move_comment"/>
+                </div>
+            </div>
+        </xpath>
+
     </template>
 </odoo>

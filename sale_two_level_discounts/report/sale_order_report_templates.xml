@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <template id="report_saleorder_document_quotation_two_discount" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//th[@name='th_discount']" position="after">
+                <th name="th_discount_2" t-if="display_discount" class="text-right"  groups="product.group_discount_per_so_line">
+                    <span>Disc 2.%</span>
+                </th>
+            </xpath>
+
+            <xpath expr="//td[@groups='product.group_discount_per_so_line']" position="after">
+                <td t-if="display_discount" name="td_discount_2"  class="text-right" groups="product.group_discount_per_so_line">
+                    <span t-field="line.discount2"/>
+                </td>
+            </xpath>
+
+            <xpath expr="//t[@t-set='display_discount']" position="attributes">
+                <attribute name="t-value">any(l.discount for l in doc.order_line) or any(l.discount2 for l in doc.order_line)</attribute>
+            </xpath>
+
+        </template>
+    </data>
+</odoo>

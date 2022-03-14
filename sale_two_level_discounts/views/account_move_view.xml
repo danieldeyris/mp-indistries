@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- inherit customer invoice form -->
+	<record id="invoice_form_it_inherit" model="ir.ui.view">
+	    <field name="name">account.invoice.form.it</field>
+	    <field name="model">account.move</field>
+	    <field name="inherit_id" ref="account.view_move_form">
+		</field>
+	    <field name="arch" type="xml">
+	    	<xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">
+	    		<attribute name="string">Disc-I (%)</attribute>
+	    	</xpath>
+	    	<xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="after">
+	    		<field name="discount2" groups="product.group_discount_per_so_line" optional="show"/>
+	    	</xpath>
+			<xpath expr="//field[@name='line_ids']/tree/field[@name='discount']" position="after">
+	    		<field name="discount2" invisible="1"/>
+	    	</xpath>
+			<xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='discount']" position="attributes">
+	    		<attribute name="string">Disc-I (%)</attribute>
+	    	</xpath>
+			<xpath expr="//field[@name='invoice_line_ids']/form/sheet/group/field[@name='discount']" position="after">
+	    		<field name="discount2" groups="product.group_discount_per_so_line" optional="show"/>
+	    	</xpath>
+	    </field>
+	</record>
+
+</odoo>
