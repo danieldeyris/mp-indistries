@@ -38,6 +38,8 @@
         'phi_order_comment',
         'delivery',
         'phi_customer_insured_amount',
+        'account_invoice_section_shipment',
+        'sale_two_level_discounts',
     ],
     "data": [
         'security/ir.model.access.csv',
