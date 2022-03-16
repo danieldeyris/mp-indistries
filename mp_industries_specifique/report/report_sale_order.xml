@@ -2,16 +2,7 @@
 <odoo>
 
     <template id="report_saleorder_document_mp_industries" inherit_id="sale.report_saleorder_document">
-        <xpath expr="/t/t/div/h2/t[1]/span[2]" position="replace">
-            <span t-if="doc.state in ['draft','sent']">Devis N°</span>
-        </xpath>
-        <xpath expr="/t/t/div/div[1]" position="after">
-            <div class="row">
-                <div class="col">
-                    <span t-field="doc.partner_id.x_studio_identifiant_qudra"/>
-                </div>
-            </div>
-        </xpath>
+
         <xpath expr="/t/t/div/div[2]" position="after">
             <div class="row address">
                 <div class="col-5">
@@ -20,14 +11,11 @@
                 <div class="col-5 offset-2"/>
             </div>
         </xpath>
+
         <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
             <attribute name="t-options-fields">['name', 'address', 'phone', 'mobile']</attribute>
         </xpath>
-        <xpath expr="/t/t/div/table/thead/tr/th[5]" position="after">
-            <th>
-                <span>Date prévue</span>
-            </th>
-        </xpath>
+
         <xpath expr="/t/t/div/table/tbody/t[2]/tr/t[1]/td[5]" position="after">
             <td>
                 <span t-field="line.scheduled_date"/>
@@ -45,12 +33,6 @@
         <xpath expr="/t[1]/t[1]/t[3]/div[1]" position="attributes">
             <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email', 'vat']</attribute>
         </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/div[4]/div[2]/p[1]" position="attributes">
-            <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
-        <xpath expr="/t/t/div/div[4]/div[6]/strong" position="replace">
-            <strong>Commercial :</strong>
-        </xpath>
         <xpath expr="/t/t/div/table/thead/tr/th[3]" position="replace">
             <th name="th_priceunit" class="text-right">Prix Net</th>
         </xpath>
@@ -66,22 +48,16 @@
         </xpath>
         <xpath expr="/t/t/div/table/thead/tr/th[1]/span" position="replace">
             <span>Référence</span>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[2]/span[1]" position="attributes">
+        </xpath>        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[2]/span[1]" position="attributes">
             <attribute name="t-field">line.product_id.name</attribute>
         </xpath>
         <xpath expr="/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[6]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]/span[1]" position="attributes">
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[7]/span[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[7]/span[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
+
         <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
@@ -93,17 +69,27 @@
         </xpath>
 
         <xpath expr="//div[@id='informations']" position="inside">
-            <div t-if="doc.pricelist_id" class="col-3 bm-2">
+            <div t-if="doc.pricelist_id " class="col-3 bm-2">
                 <strong>Tarif :</strong>
                 <p t-field="doc.pricelist_id" class="m-0"/>
             </div>
         </xpath>
 
-        <xpath expr="/t/t/div/div[4]" position="after">
+        <xpath expr="//div[@id='informations']" position="inside">
+            <t t-if="doc.state not in ['draft','sent']">
+                <div t-if="doc.commitment_date" class="col-3 bm-2">
+                    <t t-set="date_week" t-value="doc.commitment_date.isocalendar()[1]"></t>
+                    <strong>Délai (n° semaine):</strong>
+                    <p t-esc="date_week" class="m-0"/>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="before">
             <div class="row" t-if="doc.order_comment">
                 <div class="col-2">
                     <span>
-                        <strong>Commentaire :</strong>
+                        <strong>Réference :</strong>
                     </span>
 
                 </div>
@@ -114,15 +100,31 @@
         </xpath>
 
         <xpath expr="//div[@name='so_total_summary']" position="after">
-            <div class="row" t-if="doc.order_volume">
+            <div class="row" t-if="doc.carrier_id and doc.state not in ['draft','sent']">
                 <div class="col-2">
                     <span>
-                        <strong>Volume : </strong>
+                        <strong>Transporteur :</strong>
                     </span>
 
                 </div>
                 <div class="col-10">
-                    <span t-field="doc.order_volume"/> m3
+                    <span t-field="doc.carrier_id"/>
+                </div>
+            </div>
+        </xpath>
+
+
+        <xpath expr="//div[@name='so_total_summary']" position="after">
+            <div class="row" t-if="doc.order_volume">
+                <div class="col-2">
+                    <span>
+                        <strong>Volume :</strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="doc.order_volume"/>
+                    m3
                 </div>
             </div>
         </xpath>
@@ -134,6 +136,29 @@
                 </div>
             </div>
         </xpath>
+    </template>
+
+    <template id="sale_two_level_discounts.report_saleorder_document_quotation_two_discount"
+              inherit_id="sale.report_saleorder_document">
+        <!--        <xpath expr="//th[@name='th_discount']" position="after">-->
+        <!--            <th name="th_discount_2" t-if="display_discount" class="text-right"-->
+        <!--                groups="product.group_discount_per_so_line">-->
+        <!--                <span>Disc 2.%</span>-->
+        <!--            </th>-->
+        <!--        </xpath>-->
+
+            <xpath expr="//span[@t-field='line.discount']" position="after">
+                <div t-if="line.discount2">
+                    + <span class="text-nowrap" t-field="line.discount2"/>
+                </div>
+            </xpath>
+
+        <xpath expr="//t[@t-set='display_discount']" position="attributes">
+            <attribute name="t-value">any(l.discount for l in doc.order_line) or any(l.discount2 for l in
+                doc.order_line)
+            </attribute>
+        </xpath>
+
     </template>
 
 </odoo>
