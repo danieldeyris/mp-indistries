@@ -29,5 +29,36 @@
             </t>
             <attribute name="style" separator=";" add="margin-top:1px"/>
         </xpath>
+
+        <xpath expr="//div[@id='informations']" position="before">
+            <div class="row" t-if="o.move_comment">
+                <div class="col-2">
+                    <span>
+                        <strong>Reference :</strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="o.move_comment"/>
+                </div>
+            </div>
+        </xpath>
+
     </template>
+
+        <template id="sale_two_level_discounts.report_invoice_two_discount" inherit_id="account.report_invoice_document">
+
+<!--            <xpath expr="//th[@name='th_price_unit']" position="after">-->
+<!--                <th name="th_price_unit2" t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">-->
+<!--                    <span>Disc 2x.%</span>-->
+<!--                </th>-->
+<!--            </xpath>-->
+
+            <xpath expr="//span[@t-field='line.discount']" position="after">
+                <div t-if="line.discount2">
+                    + <span class="text-nowrap" t-field="line.discount2"/>
+                </div>
+            </xpath>
+
+        </template>
 </odoo>

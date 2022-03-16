@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_customer_mp_industries" model="ir.ui.view">
+        <field name="name">sale.order.form.customer_mp_industries</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_policy']" position="after">
+                <field name="carrier_id"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="check_credit" invisible="1"/>
+                <field name="available_credit" attrs="{'invisible':[('check_credit','!=',True)]}"/>
+                <field name="credit_limit" attrs="{'invisible':[('check_credit','!=',True)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

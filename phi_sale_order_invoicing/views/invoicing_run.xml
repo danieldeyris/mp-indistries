@@ -1,0 +1,109 @@
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="invoicing_run_list">
+            <field name="name">Invoicing Run</field>
+            <field name="model">invoicing.run</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="partner_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="amount_total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="invoicing_run_form_view" model="ir.ui.view">
+            <field name="name">Invoicing run Form</field>
+            <field name="model">invoicing.run</field>
+            <field name="arch" type="xml">
+                <form string="Invoicing Run">
+                    <header>
+                        <button name="action_confirm" states="process" string="Valider" type="object" class="oe_highlight"/>
+                        <button name="action_process" states="draft" string="Process" type="object" class="oe_highlight"/>
+                        <button name="action_reset" states="process" string="Reset" type="object" />
+                        <button name="action_print" states="done" string="Print Invoices" type="object" class="oe_highlight"/>
+                        <button name="action_cancel" states="draft,process" string="Annuler" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,process,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" placeholder="ex. Invoicing 16/04/2019"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" groups="base.group_multi_company"
+                                       attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="date" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                <field name="partner_id" domain="[('customer_rank','>',0)]"
+                                       attrs="{'readonly': [('state','!=','draft')]}"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="amount_total"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="view_invoicing_run_filter" model="ir.ui.view">
+            <field name="name">invoicing_run_line_filter</field>
+            <field name="model">invoicing.run</field>
+            <field name="arch" type="xml">
+                <search string="Search Inventory">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="company_id"/>
+                    <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="In Progress" name="confirm" domain="[('state', '=', 'process')]"/>
+                    <filter string="Complete" name="done" domain="[('state', '=', 'done')]"/>
+                    <filter string="Cancelled" name="cancel" domain="[('state', '=', 'cancel')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Statut" name="status" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Date" name="invoicing_date" domain="[]" context="{'group_by':'date'}"
+                                help="Invoicing by date"/>
+                    </group>
+                </search>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="invoicing_run_action_window">
+            <field name="name">Invoicing Run</field>
+            <field name="res_model">invoicing.run</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Create a first invoising run</p>
+            </field>
+            <field name="view_id" ref="invoicing_run_list"/>
+            <field name="search_view_id" ref="view_invoicing_run_filter"/>
+        </record>
+
+        <menuitem id="invoicing_run" parent="account.menu_finance_receivables" action="invoicing_run_action_window"/>
+
+    </data>
+</odoo>

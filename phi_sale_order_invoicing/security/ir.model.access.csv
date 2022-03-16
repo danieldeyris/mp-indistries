@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+phi_sale_order_invoicing.access_invoicing_run,access_invoicing_run,phi_sale_order_invoicing.model_invoicing_run,base.group_user,1,1,1,1
+
+

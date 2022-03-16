@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+catalog_pricelist_report.access_catalog_pricelist_report_wizard,access_catalog_pricelist_report_wizard,catalog_pricelist_report.model_catalog_pricelist_report_wizard,base.group_user,1,1,1,1
