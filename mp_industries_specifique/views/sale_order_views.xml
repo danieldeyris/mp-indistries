@@ -13,6 +13,10 @@
                 <field name="available_credit" attrs="{'invisible':[('check_credit','!=',True)]}"/>
                 <field name="credit_limit" attrs="{'invisible':[('check_credit','!=',True)]}"/>
             </xpath>
+            <xpath expr="//field[@name='picking_policy']" position="after">
+                <field name="order_volume"/>
+                <field name="order_weight"/>
+            </xpath>
         </field>
     </record>
 </odoo>
