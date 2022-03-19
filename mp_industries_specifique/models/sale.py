@@ -16,6 +16,7 @@ class SaleOrder(models.Model):
     def _compute_order_volumepoids(self):
         for order in self:
             order.order_volume = 0
+            order.order_weight = 0
             for line in order.order_line:
                 order.order_volume += (line.product_id.volume or 0.0) * line.product_uom_qty
                 order.order_weight += (line.product_id.weight or 0.0) * line.product_uom_qty
