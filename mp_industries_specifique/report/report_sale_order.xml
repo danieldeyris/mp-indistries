@@ -27,13 +27,22 @@
             <attribute name="t-options-widget">"date"</attribute>
         </xpath>
 
-        <xpath expr="//div[@t-if='doc.user_id.name']" position="replace">
-            <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
-                <strong>Commercial:</strong>
-                <p class="m-0" t-field="doc.user_id"/>
-                <p class="m-0" t-if="doc.user_id.phone" t-field="doc.user_id.phone"/>
-                <p class="m-0" t-if="doc.user_id.mobile" t-field="doc.user_id.mobile"/>
-                <p class="m-0" t-if="doc.user_id.email_normalized" t-field="doc.user_id.email_normalized"/>
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+
+        <xpath expr="//div[@id='informations']" position="after">
+            <div t-if="doc.user_id.name">
+                <br/>
+                <span><strong>Commercial : </strong></span>
+                <span t-field="doc.user_id"/>
+                <span t-if="doc.user_id.phone"><strong> Tel : </strong></span>
+                <span class="m-0" t-if="doc.user_id.phone" t-field="doc.user_id.phone"/>
+                 <span t-if="doc.user_id.mobile"><strong> Mobile : </strong></span>
+                <span class="m-0" t-if="doc.user_id.mobile" t-field="doc.user_id.mobile"/>
+                 <span t-if="doc.user_id.email_normalized"><strong> Email : </strong></span>
+                <span class="m-0" t-if="doc.user_id.email_normalized" t-field="doc.user_id.email_normalized"/>
+                <br/>
             </div>
         </xpath>
 
