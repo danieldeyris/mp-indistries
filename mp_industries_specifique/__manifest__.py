@@ -13,7 +13,7 @@
     'author': "Phidias",
     'website': "http://www.phidias.fr",
     'category': 'Uncategorized',
-    'version': '15.0.0.14',
+    'version': '15.0.0.15',
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
