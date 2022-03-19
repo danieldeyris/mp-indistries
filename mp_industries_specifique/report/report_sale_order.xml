@@ -3,70 +3,65 @@
 
     <template id="report_saleorder_document_mp_industries" inherit_id="sale.report_saleorder_document">
 
-        <xpath expr="/t/t/div/div[2]" position="after">
-            <div class="row address">
-                <div class="col-5">
-                    <div t-field="doc.partner_invoice_id" t-options-widget="'contact'"/>
-                </div>
-                <div class="col-5 offset-2"/>
+        <xpath expr="//div[hasclass('page')]" position="before">
+            <t t-set="information_block">
+                <strong t-if="doc.order_comment">Réference :</strong>
+                <div t-if="doc.order_comment" t-field="doc.order_comment"/>
+            </t>
+        </xpath>
+
+
+        <xpath expr="//div[@t-field='doc.partner_id']" position="attributes">
+            <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email', 'vat']</attribute>
+        </xpath>
+
+        <xpath expr="//div[@t-field='doc.partner_id']" position="attributes">
+            <attribute name="t-options-no_marker">False</attribute>
+        </xpath>
+
+        <xpath expr="//p[@t-field='doc.validity_date']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+
+        <xpath expr="//p[@t-field='doc.date_order']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
+        </xpath>
+
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="replace">
+            <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
+                <strong>Commercial:</strong>
+                <p class="m-0" t-field="doc.user_id"/>
+                <p class="m-0" t-if="doc.user_id.phone" t-field="doc.user_id.phone"/>
+                <p class="m-0" t-if="doc.user_id.mobile" t-field="doc.user_id.mobile"/>
+                <p class="m-0" t-if="doc.user_id.email_normalized" t-field="doc.user_id.email_normalized"/>
             </div>
         </xpath>
 
-        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
-            <attribute name="t-options-fields">['name', 'address', 'phone', 'mobile']</attribute>
+        <xpath expr="//th[@name='th_taxes']" position="before">
+            <th name="th_pricereduce" class="text-right">PU Net</th>
         </xpath>
 
-        <xpath expr="/t/t/div/table/tbody/t[2]/tr/t[1]/td[5]" position="after">
-            <td>
-                <span t-field="line.scheduled_date"/>
+        <xpath expr="//td[@name='td_taxes']" position="before">
+            <td name="td_pricereduce" class="text-right">
+                <span t-field="line.price_reduce"/>
             </td>
         </xpath>
-        <xpath expr="/t/t/div/table/tbody/t[2]/t[3]/tr/td" position="attributes">
-            <attribute name="colspan">100</attribute>
+
+        <xpath expr="//th[@name='th_description']" position="attributes">
+            <attribute name="style" separator=";" add="width:300px"/>
         </xpath>
-        <xpath expr="/t[1]/t[1]/t[4]/t[1]/strong[2]" position="attributes">
+
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
-        <xpath expr="/t[1]/t[1]/t[4]/t[1]/div[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/t[3]/div[1]" position="attributes">
-            <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email', 'vat']</attribute>
-        </xpath>
-        <xpath expr="/t/t/div/table/thead/tr/th[3]" position="replace">
-            <th name="th_priceunit" class="text-right">Prix Net</th>
-        </xpath>
-        <xpath expr="/t/t/div/table/thead/tr/th[1]" position="before">
-            <th>
-                <span>Référence interne</span>
-            </th>
-        </xpath>
-        <xpath expr="/t/t/div/table/tbody/t[2]/tr/t[1]/td[1]" position="before">
-            <td>
-                <span t-field="line.product_id.default_code"/>
-            </td>
-        </xpath>
-        <xpath expr="/t/t/div/table/thead/tr/th[1]/span" position="replace">
-            <span>Référence</span>
-        </xpath>        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[2]/span[1]" position="attributes">
-            <attribute name="t-field">line.product_id.name</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[6]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[6]" position="attributes">
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
 
-        <xpath expr="/t[1]/t[1]/div[1]/div[3]/div[1]/div[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
+        <xpath expr="//th[@name='th_priceunit']" position="replace">
+            <th name="th_priceunit" class="text-right">PU Brut</th>
         </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[3]/span[2]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[7]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
+
 
         <xpath expr="//div[@id='informations']" position="inside">
             <div t-if="doc.pricelist_id " class="col-3 bm-2">
@@ -85,20 +80,6 @@
             </t>
         </xpath>
 
-        <xpath expr="//div[@id='informations']" position="before">
-            <div class="row" t-if="doc.order_comment">
-                <div class="col-2">
-                    <span>
-                        <strong>Réference :</strong>
-                    </span>
-
-                </div>
-                <div class="col-10">
-                    <span t-field="doc.order_comment"/>
-                </div>
-            </div>
-        </xpath>
-
         <xpath expr="//div[@name='so_total_summary']" position="after">
             <div class="row" t-if="doc.carrier_id and doc.state not in ['draft','sent']">
                 <div class="col-2">
@@ -115,6 +96,18 @@
 
 
         <xpath expr="//div[@name='so_total_summary']" position="after">
+            <div class="row" t-if="doc.order_weight">
+                <div class="col-2">
+                    <span>
+                        <strong>Poids :</strong>
+                    </span>
+
+                </div>
+                <div class="col-10">
+                    <span t-field="doc.order_weight"/>
+                    Kg
+                </div>
+            </div>
             <div class="row" t-if="doc.order_volume">
                 <div class="col-2">
                     <span>
@@ -130,28 +123,26 @@
         </xpath>
 
         <xpath expr="//p[@id='fiscal_position_remark']" position="after">
-            <div t-if="doc.state == 'draft'" class="mt32 ml64 mr4" name="accord">
+            <div t-if="doc.state == 'draft'" class="mt32 ml64 mr4" name="accord" style="page-break-inside: avoid;">
                 <div class="offset-8">
-                    <strong>Bon pour accord</strong>
+                    <img class="img-fluid" src="/mp_industries_specifique/static/src/img/bon_pour_accord.png"/>
+                    <!--                    <strong>Bon pour accord</strong>-->
                 </div>
             </div>
         </xpath>
+
+
     </template>
 
     <template id="sale_two_level_discounts.report_saleorder_document_quotation_two_discount"
               inherit_id="sale.report_saleorder_document">
-        <!--        <xpath expr="//th[@name='th_discount']" position="after">-->
-        <!--            <th name="th_discount_2" t-if="display_discount" class="text-right"-->
-        <!--                groups="product.group_discount_per_so_line">-->
-        <!--                <span>Disc 2.%</span>-->
-        <!--            </th>-->
-        <!--        </xpath>-->
 
-            <xpath expr="//span[@t-field='line.discount']" position="after">
-                <div t-if="line.discount2">
-                    + <span class="text-nowrap" t-field="line.discount2"/>
-                </div>
-            </xpath>
+        <xpath expr="//span[@t-field='line.discount']" position="after">
+            <div t-if="line.discount2">
+                +
+                <span class="text-nowrap" t-field="line.discount2"/>
+            </div>
+        </xpath>
 
         <xpath expr="//t[@t-set='display_discount']" position="attributes">
             <attribute name="t-value">any(l.discount for l in doc.order_line) or any(l.discount2 for l in
