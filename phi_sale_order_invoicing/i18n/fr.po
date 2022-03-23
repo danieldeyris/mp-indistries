@@ -1,0 +1,474 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* phi_sale_order_invoicing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-03 16:36+0000\n"
+"PO-Revision-Date: 2021-12-03 16:36+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__access_warning
+msgid "Access warning"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_ids
+msgid "Activities"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_state
+msgid "Activity State"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_type_icon
+msgid "Activity Type Icon"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Annuler"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: code:addons/phi_sale_order_invoicing/models/invoicing_run.py:0
+#, python-format
+msgid "Auto process %s"
+msgstr "Calcul Automatique %s"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__invoicing_run__state__cancel
+msgid "Cancel"
+msgstr "Annulé"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__company_id
+msgid "Company"
+msgstr "Société"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__invoicing_run__state__done
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Complete"
+msgstr "Traité"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model,name:phi_sale_order_invoicing.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.actions.act_window,help:phi_sale_order_invoicing.invoicing_run_action_window
+msgid "Create a first invoising run"
+msgstr "Créer un premier processus de facturation"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__currency_id
+msgid "Currency"
+msgstr "Devise"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__partner_id
+msgid "Customer"
+msgstr "Client"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__access_url
+msgid "Customer Portal URL"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__date
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Date"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__invoicing_run__state__draft
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Group By"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__id
+msgid "ID"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_exception_icon
+msgid "Icon"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_needaction
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_unread
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_has_error
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__invoicing_run__state__process
+msgid "In Process"
+msgstr "En cours"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "In Progress"
+msgstr "En cours"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__invoice_count
+msgid "Invoice Count"
+msgstr "Nb Factures"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__invoice_ids
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Invoices"
+msgstr "Factures"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_res_partner__invoicing_mode
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_res_users__invoicing_mode
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_sale_order__invoicing_mode
+msgid "Invoicing Mode"
+msgstr "Mode de facturation"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.actions.act_window,name:phi_sale_order_invoicing.invoicing_run_action_window
+#: model:ir.model,name:phi_sale_order_invoicing.model_invoicing_run
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_account_bank_statement_line__invoicing_run_id
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_account_move__invoicing_run_id
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_account_payment__invoicing_run_id
+#: model:ir.ui.menu,name:phi_sale_order_invoicing.invoicing_run
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Invoicing Run"
+msgstr "Processus de facturation"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Invoicing by date"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.actions.server,name:phi_sale_order_invoicing.ir_cron_invoice_batch_ir_actions_server
+#: model:ir.cron,cron_name:phi_sale_order_invoicing.ir_cron_invoice_batch
+#: model:ir.cron,name:phi_sale_order_invoicing.ir_cron_invoice_batch
+msgid "Invoicing: Batch Sale Invoicing"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model,name:phi_sale_order_invoicing.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_summary
+msgid "Next Activity Summary"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_type_id
+msgid "Next Activity Type"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__message_unread_counter
+msgid "Number of unread messages"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__res_partner__invoicing_mode__nogroup
+msgid "One invoice per Order"
+msgstr "Une facture par commande"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__res_partner__invoicing_mode__standard
+msgid "One invoice per customer"
+msgstr "Une facture par client"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__res_partner__invoicing_mode__reference
+msgid "One invoice per customer reference"
+msgstr "Une facture par référence client"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields.selection,name:phi_sale_order_invoicing.selection__res_partner__invoicing_mode__shipment
+msgid "One invoice per shipment"
+msgstr "Une facture par livraison"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__access_url
+msgid "Portal Access URL"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Print Invoices"
+msgstr "Imprimer Factures"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Process"
+msgstr "Traiter"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__name
+msgid "Purchase Requirement"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__user_id
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__activity_user_id
+msgid "Responsible User"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model,name:phi_sale_order_invoicing.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model,name:phi_sale_order_invoicing.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Search Inventory"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__access_token
+msgid "Security Token"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__state
+msgid "Status"
+msgstr "Statut"
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.view_invoicing_run_filter
+msgid "Statut"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__amount_total
+msgid "Total"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_unread
+msgid "Unread Messages"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "Valider"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,field_description:phi_sale_order_invoicing.field_invoicing_run__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: model:ir.model.fields,help:phi_sale_order_invoicing.field_invoicing_run__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: phi_sale_order_invoicing
+#: code:addons/phi_sale_order_invoicing/models/invoicing_run.py:0
+#, python-format
+msgid "You cannot delete an invoicing run not un dratf state."
+msgstr ""
+"Vous ne pouvez pas supprimer un processus qui n'est pas dans l'état bouillon"
+
+#. module: phi_sale_order_invoicing
+#: model_terms:ir.ui.view,arch_db:phi_sale_order_invoicing.invoicing_run_form_view
+msgid "ex. Invoicing 16/04/2019"
+msgstr ""

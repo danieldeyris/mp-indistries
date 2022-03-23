@@ -1,0 +1,380 @@
+<odoo>
+    <template id="catalog_external_layout">
+        <t t-if="not o and doc">
+            <t t-set="o" t-value="doc"/>
+        </t>
+        <t t-if="o and 'company_id' in o">
+            <t t-set="company" t-value="o.company_id"></t>
+        </t>
+        <t t-if="not o or not 'company_id' in o">
+            <t t-set="company" t-value="res_company"></t>
+        </t>
+        <t t-call="catalog_pricelist_report.external_catalog_layout_header"/>
+    </template>
+
+    <template id="external_catalog_layout_header">
+        <div class="header">
+            <div class="row" style="padding-left: 20px;">
+                <div>
+                    <t t-if="test['form']['print_images']">
+                        <t t-if="test['form']['image']">
+                            <div class="col-xs-3">
+                                <img t-att-src="'data:image/png;base64,%s' % test['form']['image']" height="90px" width="100px"/>
+                            </div>
+                            <div t-field="company.partner_id"/>
+                        </t>
+                    </t>
+                </div>
+                <div class="row text-right" style="padding-left:425px;">
+                    <div class="col-xs-3">
+                        <div t-field="company.partner_id"/>
+                        <div t-field="company.street"/>
+                        <div t-field="company.city"/>
+                        <div t-field="company.zip"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <hr style="border-bottom :1px solid black;"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="catalog_report">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-if="test['form']['header']">
+                        <t t-call="catalog_pricelist_report.catalog_external_layout"/>
+                        <t t-call="catalog_pricelist_report.catalog_main_report"/>
+                    </t>
+                    <t t-if="not test['form']['header']">
+                        <t t-call="catalog_pricelist_report.catalog_external_report"/>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="catalog_main_report">
+        <div>
+            <table style="width:100%">
+                <tr>
+                    <td width="25%">
+                        Currency : <b><span t-esc="currency_name"/></b>
+                    </td>
+                    <td width="50%" style="font-size:14pt;">
+                        <b><center><span t-esc="test['form']['custom_title']"/></center></b>
+                    </td>
+                    <td width="25%" style="margin: 10px; padding-left: 25px;">
+                        Date : <b><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></b>
+                    </td>
+                </tr>
+                 <tr class="blank_row"/>
+                 <tr class="blank_row"/>
+            </table>
+        </div>
+        <div>
+            <table class="table table-condensed" width="100%">
+                <thead>
+                    <tr style="page-break-inside: avoid;">
+                        <th width="50%" style ="border-bottom: 1px solid black; text-align:center;">Description</th>
+                        <th width="30%" style ="border-bottom: 1px solid black; text-align:center;">Attributes</th>
+                        <th width="20%" style ="border-bottom: 1px solid black; text-align:center;">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="data['categories_data']" t-as="categ_data">
+                        <tr style="page-break-inside: avoid;">
+                            <td colspan="100">
+                                <strong t-esc="categ_data['category'].name"/>
+                            </td>
+                        </tr>
+                        <tr t-foreach="categ_data['products']" t-as="product" style="page-break-inside: avoid;">
+                            <td style ="border-bottom: 1px solid gray;"  width="35%">
+                                <table class="table table-condensed" border="0" style="border: hidden" width="100%">
+                                    <tr>
+                                        <td width="30%">
+                                            <t t-if="product.image_1920">
+                                                <img t-att-src="image_data_uri(product.image_1920)" height="100px" width="100px"/>
+                                            </t>
+                                            <t t-else="else">
+                                                <img src="catalog_pricelist_report/static/description/no_img.png"
+                                                    height="100px" width="100px"/>
+                                            </t>
+
+                                        </td>
+                                        <td width="70%" style="padding-left: 30px; font-size:10pt;">
+                                            <div>
+                                                <span t-field="product.name"/>
+                                            </div>
+                                            <div>
+                                                [<span t-field="product.default_code"/>]
+                                            </div>
+                                            <div>
+                                                <t t-if="test['form']['available_quantity']">
+                                                    Available : <span t-field="product.qty_available"/>
+                                                </t>
+                                                <br></br>
+                                                <t t-if="test['form']['incoming_quantity']">
+                                                    Incoming : <span t-field="product.incoming_qty"/>
+                                                </t>
+                                            </div>
+                                            <div>
+                                                 <t t-if="test['form']['barcode_print']">
+                                                     <t t-call="catalog_pricelist_report.barcode_templated"/>
+                                                 </t>
+                                            </div>
+                                            <div>
+                                                Poids : <span t-field="product.weight"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td width="30%;"  t-attf-style="text-align:center; border-bottom: 1px solid gray; font-size:12pt; text-align:center;">
+                               <t t-if="test['form']['print_attributes']">
+                                    <t t-foreach='product.product_template_attribute_value_ids' t-as='line'>
+                                        <span  t-field="line.attribute_id.name"/>:
+                                        <span t-field="line.name"/><br></br>
+                                    </t>
+                                </t>
+                            </td>
+                            <td  width="25%" style="text-align:center; font-size:12pt; border-bottom: 1px solid gray;">
+                                <t t-if="test['form']['pricelist_id']">
+                                    <t t-foreach="data['quantities']" t-as="quantity">
+                                        <span t-esc="quantity"></span>
+                                        <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"></span></span>
+                                        <strong t-esc="categ_data['prices'][product.id][quantity]"
+                                                t-options="{
+                                                   'widget': 'float',
+                                                    'decimal_precision': 'Product Price'}"/>
+                                        <span t-esc="symbol" style="font-size:10pt"/>
+                                        <br/>
+                                    </t>
+                                </t>
+                                <t t-else="else">
+                                    <t t-if="test['form']['qty_1']">
+                                        <div>
+                                            <span t-esc="test['form']['qty_1']" style="font-size:10pt"/>
+                                            <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                            <span t-esc="(test['form']['qty_1'] * product.standard_price)" style="font-size:10pt"/>
+                                            <span t-esc="symbol" style="font-size:10pt"/>
+                                        </div>
+                                    </t>
+                                    <t t-if="test['form']['qty_2']">
+                                        <div>
+                                            <span t-esc="test['form']['qty_2']" style="font-size:10pt"/>
+                                            <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                               <span t-esc="(test['form']['qty_2'] * product.standard_price)" style="font-size:10pt"/>
+                                               <span t-esc="symbol" style="font-size:10pt"/>
+                                        </div>
+                                    </t>
+                                    <t t-if="test['form']['qty_3']">
+                                        <div>
+                                            <span t-esc="test['form']['qty_3']" style="font-size:10pt"/>
+                                            <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                            <span t-esc="(test['form']['qty_3'] * product.standard_price)" style="font-size:10pt"/>
+                                            <span t-esc="symbol" style="font-size:10pt"/>
+                                        </div>
+                                    </t>
+                                </t>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+
+    <template id="catalog_external_report">
+        <t t-call="web.external_layout">
+            <br></br>
+            <br></br>
+            <br></br>
+            <div class="page">
+                <table class="table  table-condensed" style="width:100%">
+                    <tr>
+                        <td width="25%">
+                            Currency:<b><span t-esc="currency_name"/></b>
+                        </td>
+                        <td width="50%" style="font-size:20pt;">
+                            <b><center><span t-esc="test['form']['custom_title']"/></center></b>
+                        </td>
+                        <td width="25%" style="margin: 10px; padding-left: 10px;">
+                            Date:<b><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/></b>
+                        </td>
+                    </tr>
+                </table>
+                <div class="page">
+                    <table class="table table-condensed" border="0" width="100%">
+                        <thead>
+                          <tr>
+                            <th width="35%" style ="border-bottom: 1px solid black; text-align:center;">Description</th>
+                            <th width="30%" style ="border-bottom: 1px solid black; text-align:center;">Attributes</th>
+                            <th width="25%" style ="border-bottom: 1px solid black; text-align:center;">Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data['categories_data']" t-as="categ_data">
+                             <tr style="page-break-inside: avoid;">
+                                <td colspan="100">
+                                    <strong t-esc="categ_data['category'].name"/>
+                                </td>
+                            </tr>
+                            <tr style="page-break-inside: avoid;" t-foreach="categ_data['products']" t-as="product">
+                                <td style ="border-bottom: 1px solid gray;"  width="35%">
+                                    <table class="table" border="0" style="border: hidden">
+                                        <tr style="page-break-inside: avoid;">
+                                            <td width="30%">
+                                                <t t-if="product.image_1920">
+                                                    <img t-att-src="image_data_uri(product.image_1920)" height="100px" width="100px"/>
+                                                </t>
+                                                <t t-else="else">
+                                                    <img src="catalog_pricelist_report/static/description/no_img.png"
+                                                        height="100px" width="100px"/>
+                                                </t>
+
+                                            </td>
+                                            <td width="20%" style="padding-left: 30px; font-size:10pt;">
+                                                 <div>
+                                                    <span t-field="product.name"/>
+                                                </div>
+
+                                                    <div>
+                                                        [<span t-field="product.default_code"/>]
+                                                    </div>
+                                                    <div>
+                                                        <t t-if="test['form']['available_quantity']">
+                                                            Available:<span t-field="product.qty_available"/>
+                                                        </t>
+                                                        <br></br>
+                                                        <t t-if="test['form']['incoming_quantity']">
+                                                            Incoming:<span t-field="product.incoming_qty"/>
+                                                        </t>
+                                                    </div>
+                                                    <div>
+                                                         <t t-if="test['form']['barcode_print']">
+                                                             <t t-call="catalog_pricelist_report.barcode_templated"/>
+                                                         </t>
+                                                    </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td width="30%;"  t-attf-style="background-color:{{test['form']['attribute_bg_color']}}!important; text-align:center; border-bottom: 1px solid gray; font-size:12pt; text-align:center;">
+                                   <t t-if="test['form']['print_attributes']">
+                                        <t t-foreach='product.product_template_attribute_value_ids' t-as='line'>
+                                            <span  t-field="line.attribute_id.name"/>:
+                                            <span t-field="line.name"/><br></br>
+                                        </t>
+                                    </t>
+                                </td>
+                                <td  width="25%" style="text-align:center; font-size:12pt; border-bottom: 1px solid gray;">
+                                    <t t-if="test['form']['pricelist_id']">
+                                        <t t-foreach="data['quantities']" t-as="quantity">
+                                            <span t-esc="quantity"></span>
+                                            <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                            <strong t-esc="categ_data['prices'][product.id][quantity]"
+                                                    t-options="{
+                                                       'widget': 'float',
+                                                        'decimal_precision': 'Product Price'}"/>
+                                            <span t-esc="symbol" style="font-size:10pt"/>
+                                            <br/>
+                                        </t>
+                                    </t>
+                                    <t t-else="else">
+                                        <t t-if="test['form']['qty_1']">
+                                            <div>
+                                                <span t-esc="test['form']['qty_1']" style="font-size:10pt"/>
+                                                <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                                <span t-esc="(test['form']['qty_1'] * product.standard_price)" style="font-size:10pt"/>
+                                                <span t-esc="symbol" style="font-size:10pt"/>
+                                            </div>
+                                        </t>
+                                        <t t-if="test['form']['qty_2']">
+                                            <div>
+                                                <span t-esc="test['form']['qty_2']" style="font-size:10pt"/>
+                                                <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                                   <span t-esc="(test['form']['qty_2'] * product.standard_price)" style="font-size:10pt"/>
+                                                   <span t-esc="symbol" style="font-size:10pt"/>
+                                            </div>
+                                        </t>
+                                        <t t-if="test['form']['qty_3']">
+                                            <div>
+                                                <span t-esc="test['form']['qty_3']" style="font-size:10pt"/>
+                                                <span style="font-size:8pt;"><span t-if="product.uom_id" t-esc="product.uom_id.name"/></span>
+                                                <span t-esc="(test['form']['qty_3'] * product.standard_price)" style="font-size:10pt"/>
+                                                <span t-esc="symbol" style="font-size:10pt"/>
+                                            </div>
+                                        </t>
+                                    </t>
+                                </td>
+                            </tr>
+                        </t>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="barcode_templated">
+
+        <span class="align-left" style="height: 6rem">
+            <t t-if="product.barcode">
+                <t t-if="test['form']['barcode_type'] == 'ean13'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'ean8'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN8', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'code11'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code11', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'codabar'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Codabar', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'extended39'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Extended39', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'extended93'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Extended93', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'fim'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('FIM', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'i2of5'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('I2of5', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'msi'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('MSI', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'postnet'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('POSTNET', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'standard39'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Standard39', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'standard93'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Standard93', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'usps_4stater'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('USPS_4State', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'qr'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', product.barcode, test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+                <t t-if="test['form']['barcode_type'] == 'code128'">
+                    <img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', product.barcode,test['form']['barcode_height'], test['form']['barcode_width'])" style="width:100%;height::4rem;"/>
+                </t>
+            </t>
+            <t t-else=""><span class="text-muted">No barcode available</span></t>
+
+        </span>
+
+    </template>
+</odoo>
