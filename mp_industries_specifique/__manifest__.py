@@ -53,5 +53,6 @@
         'report/report_sale_order.xml',
         'report/stock_report_deliveryslip.xml',
         'views/sale_order_views.xml',
+        'views/product_template.xml',
     ]
 }
