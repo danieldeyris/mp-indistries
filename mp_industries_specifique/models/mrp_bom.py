@@ -16,5 +16,5 @@ class MrpBomLineDecoupe(models.Model):
 class MrpBomLine(models.Model):
     _inherit = 'mrp.bom.line'
 
-    decoupe_ids = fields.One2many('mrp.bom.line.decoupe', 'bom_line_id', string='Découpes')
+    decoupe_ids = fields.One2many('mrp.bom.line.decoupe', 'bom_line_id', string='Découpes', copy=True)
 
