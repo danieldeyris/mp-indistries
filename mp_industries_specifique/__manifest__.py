@@ -13,7 +13,7 @@
     'author': "Phidias",
     'website': "http://www.phidias.fr",
     'category': 'Uncategorized',
-    'version': '15.0.0.16',
+    'version': '15.0.0.17',
     'license': 'LGPL-3',
 
     # any module necessary for this one to work correctly
@@ -40,6 +40,7 @@
         'phi_customer_insured_amount',
         'account_invoice_section_shipment',
         'sale_two_level_discounts',
+        'quadra_export_ascii',
     ],
     "data": [
         'security/ir.model.access.csv',
