@@ -3,47 +3,50 @@
 
     <template id="report_saleorder_document_mp_industries" inherit_id="sale.report_saleorder_document">
 
-        <xpath expr="//div[hasclass('page')]" position="before">
-            <t t-set="information_block">
+      <xpath expr="//h2[hasclass('mt16')]" position="replace"/>
+
+      <xpath expr="//div[hasclass('page')]" position="attributes">
+        <attribute name="style">font-size: 12px !important;</attribute>
+      </xpath>
+
+      <xpath expr="//t[@t-set='address']" position="replace">
+        <h2 class="mt16">
+          <t t-if="not (env.context.get('proforma', False) or is_pro_forma)">
+            <span t-if="doc.state not in ['draft','sent']">AR de Commande n° </span>
+            <span t-if="doc.state in ['draft','sent']">DEVIS n° </span>
+          </t>
+          <t t-if="env.context.get('proforma', False) or is_pro_forma">
+            <span>Facture pro-forma n° </span>
+          </t>
+          <span t-field="doc.name"/>
+        </h2>
+        <br/>
+        <div class="row" style="font-size: 12px !important;">
+          <div class="col-auto col-4 mb-2">
                 <strong t-if="doc.order_comment">Réference :</strong>
                 <div t-if="doc.order_comment" t-field="doc.order_comment"/>
-            </t>
-        </xpath>
+            </div>
+          <div class="col-auto col-4 mb-2">
+            <strong>Adresse de livraison</strong>
+            <div t-field="doc.partner_shipping_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+          </div>
+          <div class="col-auto col-4 mb-2">
+            <div t-field="doc.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}"/>
+         </div>
+        </div>
 
+      </xpath>
 
         <xpath expr="//div[@t-field='doc.partner_id']" position="attributes">
-            <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email', 'vat']</attribute>
+            <attribute name="t-options-fields">['address', 'name', 'phone', 'mobile', 'email']</attribute>
         </xpath>
 
         <xpath expr="//div[@t-field='doc.partner_id']" position="attributes">
             <attribute name="t-options-no_marker">False</attribute>
         </xpath>
 
-        <xpath expr="//p[@t-field='doc.validity_date']" position="attributes">
-            <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
-
-        <xpath expr="//p[@t-field='doc.date_order']" position="attributes">
-            <attribute name="t-options-widget">"date"</attribute>
-        </xpath>
-
         <xpath expr="//div[@t-if='doc.user_id.name']" position="attributes">
             <attribute name="t-if">False</attribute>
-        </xpath>
-
-        <xpath expr="//div[@id='informations']" position="after">
-            <div t-if="doc.user_id.name">
-                <br/>
-                <span><strong>Commercial : </strong></span>
-                <span t-field="doc.user_id"/>
-                <span t-if="doc.user_id.phone"><strong> Tel : </strong></span>
-                <span class="m-0" t-if="doc.user_id.phone" t-field="doc.user_id.phone"/>
-                 <span t-if="doc.user_id.mobile"><strong> Mobile : </strong></span>
-                <span class="m-0" t-if="doc.user_id.mobile" t-field="doc.user_id.mobile"/>
-                 <span t-if="doc.user_id.email_normalized"><strong> Email : </strong></span>
-                <span class="m-0" t-if="doc.user_id.email_normalized" t-field="doc.user_id.email_normalized"/>
-                <br/>
-            </div>
         </xpath>
 
         <xpath expr="//th[@name='th_taxes']" position="before">
@@ -68,95 +71,100 @@
         </xpath>
 
         <xpath expr="//th[@name='th_priceunit']" position="replace">
-            <th name="th_priceunit" class="text-right">PU Brut</th>
+            <th name="th_priceunit" class="text-right">P.U</th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_subtotal']" position="replace">
+            <th name="th_subtotal" class="text-right">
+                <span groups="account.group_show_line_subtotals_tax_excluded">Total H.T</span>
+                <span groups="account.group_show_line_subtotals_tax_included">Total TTC</span>
+            </th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_quantity']" position="replace">
+             <th name="th_quantity" class="text-right">Qté</th>
+        </xpath>
+
+        <xpath expr="//th[@name='th_description']" position="replace">
+             <th name="th_description" class="text-center" width="55%">[ref] Désignation</th>
+        </xpath>
+
+        <xpath expr="//span[@t-field='line.product_uom']" position="replace"/>
+
+        <xpath expr="//div[@id='informations']" position="replace">
+            <br/>
+            <table width='100%'>
+                <tr/>
+                <tr class="text-center">
+                    <td>
+                        <strong>Date</strong>
+                        <p t-field="doc.date_order" class="m-0"/>
+                    </td>
+                    <td t-if="doc.user_id ">
+                        <strong>Représentant</strong>
+                        <p t-field="doc.user_id" class="m-0"/>
+                    </td>
+                    <td t-if="doc.partner_id.vat">
+                        <strong>TVA Intracom client</strong>
+                        <p t-field="doc.partner_id.vat" class="m-0"/>
+                    </td>
+                    <td t-if="doc.payment_term_id">
+                        <strong>Conditions de paiement</strong>
+                        <p class="m-0" t-field="doc.payment_term_id"/>
+                    </td>
+                    <td t-if="doc.state not in ['draft','sent']">
+                        <t t-set="date_week" t-value="doc.commitment_date.isocalendar()[1]"/>
+                        <strong>Délai de livraison:</strong>
+                        <p t-esc="date_week" class="m-0"/>
+                    </td>
+                    <td t-if="doc.validity_date and doc.state in ['draft', 'sent']">
+                        <strong>Délai de validité du devis</strong>
+                        <p class="m-0" t-field="doc.validity_date"/>
+                    </td>
+                </tr>
+            </table>
         </xpath>
 
 
-        <xpath expr="//div[@id='informations']" position="inside">
-            <div t-if="doc.pricelist_id " class="col-3 bm-2">
-                <strong>Tarif :</strong>
-                <p t-field="doc.pricelist_id" class="m-0"/>
-            </div>
+        <xpath expr="//p[@t-field='doc.date_order']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
         </xpath>
 
-        <xpath expr="//div[@id='informations']" position="inside">
-            <t t-if="doc.state not in ['draft','sent']">
-                <div t-if="doc.commitment_date" class="col-3 bm-2">
-                    <t t-set="date_week" t-value="doc.commitment_date.isocalendar()[1]"></t>
-                    <strong>Délai (n° semaine):</strong>
-                    <p t-esc="date_week" class="m-0"/>
-                </div>
-            </t>
+        <xpath expr="//p[@t-field='doc.validity_date']" position="attributes">
+            <attribute name="t-options-widget">"date"</attribute>
         </xpath>
+
+        <xpath expr="//p[@t-field='doc.note']" position="replace"/>
+        <xpath expr="//p[@t-if='not is_html_empty(doc.payment_term_id.note)']" position="replace"/>
 
         <xpath expr="//div[@name='so_total_summary']" position="after">
-            <div class="row" t-if="doc.carrier_id and doc.state not in ['draft','sent']">
-                <div class="col-2">
-                    <span>
-                        <strong>Transporteur :</strong>
-                    </span>
-
+             <div class="row" style="font-size: 12px !important;">
+                <div class="col-8">
+                    <div>
+                        <span><strong>Info Div:</strong></span>
+                    </div>
+                    <div>
+                        <span t-field="doc.order_weight"/>
+                        <span style="padding-left:30px;"/>
+                        <span t-field="doc.order_volume"/>
+                    </div>
+                    <div t-if="doc.carrier_id">
+                        <span><strong>Transporteur :</strong></span>
+                        <span t-field="doc.carrier_id"/>
+                    </div>
+                    <div>
+                        <p>Les CGV jointes en annexe de ce devis en font partie intégrante</p>
+                    </div>
+                    <div t-if="doc.state in ['draft','sent']">
+                        <p t-field="doc.note"/>
+                    </div>
                 </div>
-                <div class="col-10">
-                    <span t-field="doc.carrier_id"/>
-                </div>
-            </div>
-        </xpath>
-
-
-        <xpath expr="//div[@name='so_total_summary']" position="after">
-            <div class="row" t-if="doc.order_weight">
-                <div class="col-2">
-                    <span>
-                        <strong>Poids :</strong>
-                    </span>
-
-                </div>
-                <div class="col-10">
-                    <span t-field="doc.order_weight"/>
-                    Kg
-                </div>
-            </div>
-            <div class="row" t-if="doc.order_volume">
-                <div class="col-2">
-                    <span>
-                        <strong>Volume :</strong>
-                    </span>
-
-                </div>
-                <div class="col-10">
-                    <span t-field="doc.order_volume"/>
-                    m3
+                <div t-if="doc.state in ['draft','sent']" class="col-auto col-4 mb-2 text-center" style="font-size: 14px !important;">
+                     <strong>Bon pour accord</strong>
+                     <p style="font-size: 10px !important;">(nom,signature et cachet commercial)</p>
                 </div>
             </div>
-        </xpath>
 
-        <xpath expr="//p[@id='fiscal_position_remark']" position="after">
-            <div t-if="doc.state == 'draft'" class="mt32 ml64 mr4" name="accord" style="page-break-inside: avoid;">
-                <div class="offset-8">
-                    <img class="img-fluid" src="/mp_industries_specifique/static/src/img/bon_pour_accord.png"/>
-                    <!--                    <strong>Bon pour accord</strong>-->
-                </div>
-            </div>
-        </xpath>
-
-
-    </template>
-
-    <template id="sale_two_level_discounts.report_saleorder_document_quotation_two_discount"
-              inherit_id="sale.report_saleorder_document">
-
-        <xpath expr="//span[@t-field='line.discount']" position="after">
-            <div t-if="line.discount2">
-                +
-                <span class="text-nowrap" t-field="line.discount2"/>
-            </div>
-        </xpath>
-
-        <xpath expr="//t[@t-set='display_discount']" position="attributes">
-            <attribute name="t-value">any(l.discount for l in doc.order_line) or any(l.discount2 for l in
-                doc.order_line)
-            </attribute>
         </xpath>
 
     </template>
