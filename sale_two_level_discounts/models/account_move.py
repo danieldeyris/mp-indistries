@@ -39,7 +39,7 @@ class AccountMoveLine(models.Model):
             amount_currency = amount_currency / discount_factor2
         return super(AccountMoveLine, self)._get_fields_onchange_balance_model(quantity, discount, amount_currency, move_type, currency, taxes, price_subtotal,force_computation )
 
-    @api.onchange('discount2')
+    @api.onchange('discount2', 'discount')
     def _onchange_discount2(self):
         for line in self:
             if not line.move_id.is_invoice(include_receipts=True):
@@ -66,11 +66,11 @@ class AccountMove(models.Model):
 
         self.ensure_one()
 
-        discount2 = 0
-        for line in self.line_ids.filtered(lambda line: not line.exclude_from_invoice_tab):
-            discount2 = line.discount2
-        if discount2 == 0:
-            return super(AccountMove, self)._recompute_tax_lines(recompute_tax_base_amount)
+        # discount2 = 0
+        # for line in self.line_ids.filtered(lambda line: not line.exclude_from_invoice_tab):
+        #     discount2 = line.discount2
+        # if discount2 == 0:
+        #     return super(AccountMove, self)._recompute_tax_lines(recompute_tax_base_amount)
 
         in_draft_mode = self != self._origin
 
