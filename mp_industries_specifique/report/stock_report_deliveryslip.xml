@@ -1,13 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_delivery_document_inherit_sale_stock" inherit_id="delivery.report_delivery_document2">
-        <xpath expr="/t/t/t/div/div[2]" position="before">
-            <div class="row" t-if="o.picking_type_id.code=='outgoing'">
-                <div class="col h1 text-center">
-                    <span>Bon de Livraison</span>
+
+        <xpath expr="//h2" position="replace"/>
+
+        <xpath expr="//div[hasclass('page')]" position="attributes">
+        <attribute name="style">font-size: 12px !important;</attribute>
+      </xpath>
+
+      <xpath expr="//t[@t-set='address']" position="replace">
+        <h2 class="mt16">
+            <span>BON DE LIVRAISON</span>
+            <span t-field="o.name"/>
+        </h2>
+        <br/>
+        <div class="row" style="font-size: 12px !important;">
+          <div class="col-auto col-4 mb-2">
+                <strong t-if="o.picking_comment">Réference :</strong>
+                <div t-if="o.picking_comment" t-field="o.picking_comment"/>
+            </div>
+          <div class="col-auto col-4 mb-2">
+            <div t-if="o.move_ids_without_package and o.move_ids_without_package[0].partner_id">
+                <div t-if="o.move_ids_without_package and o.move_ids_without_package[0].partner_id">
+                    <strong>Adresse de livraison</strong>
+                    <div t-field="o.move_ids_without_package[0].partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                </div>
+                <div t-if="o.picking_type_id.code != 'internal' and (not o.move_ids_without_package or not o.move_ids_without_package[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
+                    <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
                 </div>
             </div>
+          </div>
+          <div class="col-auto col-4 mb-2">
+            <div t-if="partner" name="partner_header">
+                <div t-field="partner.self" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                <p t-if="partner.sudo().vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="partner.sudo().vat"/></p>
+            </div>
+         </div>
+        </div>
+      </xpath>
+
+      <xpath expr="//table[@name='stock_move_line_table']" position="replace">
+        <table class="table table-sm mt48" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
+            <t t-set="has_serial_number" t-value="False"/>
+            <t t-set="has_serial_number" t-value="o.move_line_ids.mapped('lot_id')" groups="stock.group_lot_on_delivery_slip"/>
+            <thead>
+                <tr>
+                    <th name="th_sml_product"><strong>Product</strong></th>
+                    <t name="lot_serial" t-if="has_serial_number">
+                        <th>
+                            Lot/Numéro de série
+                        </th>
+                    </t>
+                    <th name="th_sml_qty_ordered" class="text-center" t-if="not has_serial_number">
+                        <strong>Commandé</strong>
+                    </th>
+                    <th name="th_sml_quantity" class="text-center"><strong>Livré</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+            <!-- This part gets complicated with different use cases (additional use cases in extensions of this report):
+                    1. If serial numbers are used and set to print on delivery slip => print lines as is, otherwise group them by overlapping
+                        product + description + uom combinations
+                    2. If any packages are assigned => split products up by package (or non-package) and then apply use case 1 -->
+                <!-- If has destination packages => create sections of corresponding products -->
+                <t t-if="o.has_packages" name="has_packages">
+                    <t t-set="packages" t-value="o.move_line_ids.mapped('result_package_id')"/>
+                    <t t-foreach="packages" t-as="package">
+                        <t t-call="stock.stock_report_delivery_package_section_line"/>
+                        <t t-set="package_move_lines" t-value="o.move_line_ids.filtered(lambda l: l.result_package_id == package)"/>
+                        <!-- If printing lots/serial numbers => keep products in original lines -->
+                        <t t-if="has_serial_number">
+                            <tr t-foreach="package_move_lines" t-as="move_line">
+                                <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                            </tr>
+                        </t>
+                        <!-- If not printing lots/serial numbers => merge lines with same product+description+uom -->
+                        <t t-else="">
+                            <t t-set="aggregated_lines" t-value="package_move_lines._get_aggregated_product_quantities(strict=True)"/>
+                            <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                        </t>
+                    </t>
+                    <!-- Make sure we do another section for package-less products if they exist -->
+                    <t t-set="move_lines" t-value="o.move_line_ids.filtered(lambda l: not l.result_package_id)"/>
+                    <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities(except_package=True)"/>
+                    <t t-if="move_lines or aggregated_lines" name="no_package_move_lines">
+                        <t t-call="stock.stock_report_delivery_no_package_section_line" name="no_package_section"/>
+                        <t t-if="has_serial_number">
+                            <tr t-foreach="move_lines" t-as="move_line">
+                                <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                            </tr>
+                        </t>
+                        <t t-elif="aggregated_lines">
+                            <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                        </t>
+                    </t>
+                </t>
+                <!-- No destination packages -->
+                <t t-else="">
+                    <!-- If printing lots/serial numbers => keep products in original lines -->
+                    <t t-if="has_serial_number">
+                        <tr t-foreach="o.move_line_ids" t-as="move_line">
+                            <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                        </tr>
+                    </t>
+                    <!-- If not printing lots/serial numbers => merge lines with same product -->
+                    <t t-else="" name="aggregated_move_lines">
+                        <t t-set="aggregated_lines" t-value="o.move_line_ids._get_aggregated_product_quantities()"/>
+                        <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                    </t>
+                </t>
+            </tbody>
+        </table>
+      </xpath>
+
+        <xpath expr="//div[@name='signature']" position="after">
+             <div class="row" style="font-size: 12px !important;">
+                <div class="col-8">
+                    <div>
+                        <span><strong>Info Div:</strong></span>
+                    </div>
+                    <div>
+                        <span t-field="o.picking_weight"/>
+                        <span style="padding-left:30px;"/>
+                        <span t-field="o.picking_volume"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <span><strong>Poids Brut :</strong></span>
+                        <span t-field="o.weight"/>
+                        <span style="padding-left:50px;"/>
+                        <t t-set="nb_colis" t-value="len(o.package_ids)"/>
+                        <span><strong>Nombre de colis :</strong></span>
+                        <span t-esc="nb_colis"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <span><strong>Date enlevement :</strong></span>
+                        <span t-field="o.date_done" t-options='{"widget": "date"}'/>
+                        <span style="padding-left:50px;"/>
+                        <span><strong>Visa chauffeur :</strong></span>
+                    </div>
+                </div>
+
+            </div>
+
         </xpath>
+
 <!--        <xpath expr="/t/t/t/div/div[3]/div[2]/div[3]/span/strong" position="replace">-->
 <!--            <strong>Adresse Livraison:</strong>-->
 <!--        </xpath>-->
@@ -18,14 +156,37 @@
 <!--            <strong>Poids Net:</strong>-->
 <!--        </xpath>-->
 
-        <xpath expr="//div[@name='div_outgoing_address']" position="inside">
-            <div class="row">
-            <div  class="col-auto" t-if="o.picking_comment">
-                <strong>Reference :</strong>
-                <p t-field="o.picking_comment"/>
-            </div>
-            </div>
-        </xpath>
 
+    </template>
+
+    <template id="stock_report_delivery_has_serial_move_line_mp_industrie" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//span[@t-field='move_line.product_id']" position="after">
+            <span t-field="move_line.product_id.description_sale"/>
+        </xpath>
+    </template>
+
+    <template id="stock.stock_report_delivery_aggregated_move_lines" >
+        <tr t-foreach="aggregated_lines" t-as="line">
+            <td>
+                <span t-esc="aggregated_lines[line]['name']"/>
+                <p t-if="aggregated_lines[line]['description_sale']">
+                    <span t-esc="aggregated_lines[line]['description_sale']"/>
+                </p>
+                <p t-if="aggregated_lines[line]['description']">
+                    <span t-esc="aggregated_lines[line]['description']"/>
+                </p>
+            </td>
+            <td class="text-center" name="move_line_aggregated_qty_ordered">
+                <span t-esc="aggregated_lines[line]['qty_ordered']"
+                    t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+                <span t-esc="aggregated_lines[line]['product_uom']"/>
+            </td>
+            <td class="text-center" name="move_line_aggregated_qty_done">
+                <t t-if="aggregated_lines[line]['qty_done']">
+                    <span t-esc="aggregated_lines[line]['qty_done']"
+                        t-options="{'widget': 'float', 'decimal_precision': 'Product Unit of Measure'}"/>
+                </t>
+            </td>
+        </tr>
     </template>
 </odoo>
