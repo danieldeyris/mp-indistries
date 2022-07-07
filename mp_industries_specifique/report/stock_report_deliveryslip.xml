@@ -31,13 +31,37 @@
             </div>
           </div>
           <div class="col-auto col-4 mb-2">
+            <t t-set="partner" t-value="o.partner_id.parent_id or o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
             <div t-if="partner" name="partner_header">
-                <div t-field="partner.self" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                <div t-field="partner.self" t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'email'], 'no_marker': True, 'phone_icons': True}"/>
                 <p t-if="partner.sudo().vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="partner.sudo().vat"/></p>
             </div>
          </div>
         </div>
       </xpath>
+
+         <xpath expr="//div[hasclass('mb32')]" position="replace">
+            <div class="row mt32 mb32">
+                <div t-if="o.state" class="col-auto" name="div_sched_date">
+                    <strong>Date d'expédition:</strong>
+                    <t t-if="o.state == 'done'">
+                        <p t-field="o.date_done"/>
+                    </t>
+                    <t t-if="o.state != 'done'">
+                        <p t-field="o.scheduled_date"/>
+                   </t>
+                </div>
+                <div t-if="o.sale_id and o.sale_id.user_id" class="col-auto" name="div_rep">
+                    <strong>Representant:</strong>
+                    <p t-field="o.sale_id.user_id"/>
+                </div>
+                <div t-if="o.origin" class="col-auto" name="div_origin">
+                    <strong>Commande:</strong>
+                    <p t-field="o.origin"/>
+                </div>
+
+            </div>
+         </xpath>
 
       <xpath expr="//table[@name='stock_move_line_table']" position="replace">
         <table class="table table-sm mt48" t-if="o.move_line_ids and o.state=='done'" name="stock_move_line_table">
@@ -115,6 +139,7 @@
 
         <xpath expr="//div[@name='signature']" position="after">
              <div class="row" style="font-size: 12px !important;">
+                 <br/><br/>
                 <div class="col-8">
                     <div>
                         <span><strong>Info Div:</strong></span>
@@ -126,18 +151,20 @@
                     </div>
                     <br/>
                     <div>
+                        <span><strong>Transporteur :</strong></span>
+                        <span t-field="o.carrier_id"/>
+                    </div>
+                    <br/>
+                    <div>
                         <span><strong>Poids Brut :</strong></span>
-                        <span t-field="o.weight"/>
-                        <span style="padding-left:50px;"/>
+                        <span style="padding-left:300px;"/>
                         <t t-set="nb_colis" t-value="len(o.package_ids)"/>
                         <span><strong>Nombre de colis :</strong></span>
-                        <span t-esc="nb_colis"/>
                     </div>
                     <br/>
                     <div>
                         <span><strong>Date enlevement :</strong></span>
-                        <span t-field="o.date_done" t-options='{"widget": "date"}'/>
-                        <span style="padding-left:50px;"/>
+                        <span style="padding-left:250px;"/>
                         <span><strong>Visa chauffeur :</strong></span>
                     </div>
                 </div>
