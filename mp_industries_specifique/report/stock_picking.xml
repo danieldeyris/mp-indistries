@@ -54,22 +54,19 @@
                             <div t-if="o.move_ids_without_package and o.move_ids_without_package[0].partner_id">
                                 <strong>Adresse de livraison</strong>
                                 <div t-field="o.move_ids_without_package[0].partner_id"
-                                     t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                                     t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone'], 'no_marker': True, 'phone_icons': True}"/>
                             </div>
                             <div t-if="o.picking_type_id.code != 'internal' and (not o.move_ids_without_package or not o.move_ids_without_package[0].partner_id) and o.picking_type_id.warehouse_id.partner_id">
                                 <div t-field="o.picking_type_id.warehouse_id.partner_id"
-                                     t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                                     t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'email'], 'no_marker': True, 'phone_icons': True}"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-auto col-4 mb-2">
-                        <div t-if="o.partner_id" name="partner_header">
-                            <div t-field="o.partner_id"
-                                 t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
-                            <p t-if="o.sudo().partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>
-                                :
-                                <span t-field="o.sudo().partner_id.vat"/>
-                            </p>
+                        <t t-set="partner" t-value="o.partner_id.parent_id or o.partner_id or (o.move_lines and o.move_lines[0].partner_id) or False"/>
+                        <div t-if="partner" name="partner_header">
+                            <div t-field="partner.self" t-options="{'widget': 'contact', 'fields': ['address', 'name', 'phone', 'email'], 'no_marker': True, 'phone_icons': True}"/>
+                            <p t-if="partner.sudo().vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="partner.sudo().vat"/></p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +83,7 @@
                     <div class="col-auto" name="div_sched_date">
                         <div t-if="o.state" class="col-auto" name="div_sched_date">
                             <strong>Date planifiée:</strong>
-                            <p t-field="o.scheduled_date"/>
+                            <p t-field="o.scheduled_date" t-options='{"widget": "date"}'/>
                         </div>
                     </div>
                 </div>
